@@ -17,6 +17,10 @@
     font-family: Reader;
     src: url(fonts/Merriweather/Merriweather-Light.ttf);
 }
+@font-face {
+    font-family: ReaderItalic;
+    src: url(fonts/Merriweather/Merriweather-LightItalic.ttf);
+}
 
 * {
 	font-family: Roboto-light;
@@ -129,4 +133,20 @@ h1,h2,h3,h4,h5,h6 {
 
 .login-header {
     font-family: Roboto-light;	
+}
+
+.fob {
+	position: fixed;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    right: 20px;
+    bottom: 20px;
+    font-size: 40px;
+    box-shadow: 0px 2px 15px rgba(100,100,100,0.5);
+    transition: transform 0.25s;
+}
+
+.fob:hover {
+	transform: scale(1.05) rotate(90deg);
 }

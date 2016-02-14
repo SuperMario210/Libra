@@ -13,6 +13,10 @@
 		<script type="text/javascript" src="js/script.js"></script>
 		<title>Find Books</title>
         <script>
+
+                    
+        setInterval(function(){if(document.getElementById('searchBar').value.length==0)$(".deck").html("");},200)
+
             var query;
             
             function info()
@@ -34,13 +38,18 @@ $.ajax({
                 {   
                     $(".deck").html("");
                     var data = JSON.parse(json);
+                    if(query.length<=1)
                     for(i=0; i<data.length; i++) {
                         $(".deck").append('<a href="reader.html?id='+data[i].bookID+'"><div class="slide book fade" style="animation-delay:'+0.05*i+'s"><img src="'+data[i].imgUrl+'" style="width:140px" alt="" class="pro-img"><div class="title" style="margin-top:5px">'+data[i].title+'</div><div class="author" style="margin-top:5px">'+data[i].author+'</div></div></a>');
                     }
+                    else 
+                      for(i=0; i<data.length; i++) {
+                        $(".deck").append('<a href="reader.html?id='+data[i].bookID+'"><div class="slide book"><img src="'+data[i].imgUrl+'" style="width:140px" alt="" class="pro-img"><div class="title" style="margin-top:5px">'+data[i].title+'</div><div class="author" style="margin-top:5px">'+data[i].author+'</div></div></a>');
+                      }
                 },
                 error: function(data)
                 {
-                    alert("Not valid info!");
+                   // alert("Not valid info!");
                 },
      });
             
@@ -150,7 +159,8 @@ $.ajax({
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="home.html">My Books</a></li>
             <li><a href="search.html">Find Books</a></li>
-            <li><a href="#">My Account</a></li>
+            <li><a href="joinClass.html">Join Class</a></li>
+            <li><a href="classes.html">My Classes</a></li>
 					</ul>
 				</div>
 			</div>
