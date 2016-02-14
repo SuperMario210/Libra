@@ -13,6 +13,19 @@
   </script>
   <script type="text/javascript" src="https://cdn.firebase.com/js/client/2.4.0/firebase.js">
   </script>
+      <style>
+          .className1{
+              
+              
+              border: 1px solid;
+              padding: 20px;
+              width: 200px;
+              text-align: center;
+              background-color: #07a2e4;
+              color:#fff;
+          }
+      
+      </style>
   <title>
     Template
   </title>
@@ -45,13 +58,13 @@
             $.ajax({
               type: "GET",
               url: "http://libra-vmcool09.c9users.io/classroom/info?=" + object,
-              success: function(json,json1)
+              success: function(res, status)
               {
                 
                 $(".deck2").html("")
-                console.log(json)
-                console.log(json1)
-                  var data = JSON.parse(json1);
+                console.log(res)
+                console.log(status)
+                  var data = JSON.parse(res);
                       var data2 = JSON.parse(json);
                           
                           for(i=0; i<data.length; i++) {
@@ -157,8 +170,10 @@
   
   
   <div class="container-fluid">
+
     <div class="row">
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-0 main">
+      <div class="col-sm-15 col-sm-offset-3 col-md-1 col-md-offset-0 main">
+
         
         <button type="button" class="btn btn-success " data-toggle="modal" data-target="#myModal">
           Create a Classroom
@@ -197,9 +212,20 @@
           </div>
         </div>
         <div class="deck" id="deck">
+            <a href="class.html?id='+data[i].classID+'"><div class="className1" style="margin-top:5px">Name</div></a>
+                        <a href="class.html?id='+data[i].classID+'"><div class="className1" style="margin-top:5px">Name</div></a>
+
+                        <a href="class.html?id='+data[i].classID+'"><div class="className1" style="margin-top:5px">Name</div></a>
+
+                        <a href="class.html?id='+data[i].classID+'"><div class="className1" style="margin-top:5px">Name</div></a>
+
+                        <a href="class.html?id='+data[i].classID+'"><div class="className1" style="margin-top:5px">Name</div></a>
+
         </div>
+
       </div>
     </div>
+
   </div>
   
   <!-- Bootstrap core JavaScript
