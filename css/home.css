@@ -25,7 +25,7 @@
 	transition: transform 0.25s;
 }
 
-.book:hover {
+.book:hover, .add-book:hover {
 	transform: scale(1.05)
 }
 
@@ -37,6 +37,7 @@
 .book-title {
 	font-size: 17px;
 	padding-top: 6px;
+	color: #2c3e50;
 }
 
 .book-author {
@@ -48,4 +49,22 @@
 
 .green {
 	border-bottom: 10px #16a085 solid;
+}
+
+.add-book {
+    width: 100px;
+    display: inline-block;
+    border: 4px #ecf0f1 solid;
+    height: 157px;
+    font-size: 16px;
+    color: #ecf0f1;
+    font-family: Roboto;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 30px;
+    text-transform: uppercase;
+    margin-top: 15px;
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.25s;
 }

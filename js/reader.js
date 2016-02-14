@@ -151,7 +151,11 @@ function applyHighlights() {
 		var chapterHighlights = highlights[chapterNumber];
 		console.log(chapterHighlights);
 		for(j=0; j<chapterHighlights.length; j++) {
-			highlight(chapterHighlights[j].color, chapterHighlights[j].start, chapterHighlights[j].end, false)
+			highlight(chapterHighlights[j].color, chapterHighlights[j].start, chapterHighlights[j].end, false);
+			if(chapterHighlights[j].note && !$("#note"+chapterHighlights[j].start).length) {
+				$("<div class='displayNote' id='note"+chapterHighlights[j].start+"'></div>").insertBefore( "#"+chapterHighlights[j].start );
+				$("#note"+chapterHighlights[j].start).html(chapterHighlights[j].note);
+			}
 		}
 	}
 }
@@ -291,11 +295,15 @@ function highlight(color, start, end, add) {
 	}
 	$("."+start+end).click(function(){
 		$(".removehighlight").remove();
-		$("<div class='removehighlight'><i class='fa fa-trash-o' id='deleteHighlight'></i></div>").insertBefore( "#"+start );
+		$(".addNote").remove();
+		$("#addNote").remove();
+		$("<div class='removehighlight' id='deleteHighlight'><i class='fa fa-trash-o'></i></div><div class='addNote' id='addNote'><i class='fa fa-pencil'></i></div>").insertBefore( "#"+start );
 		$("#deleteHighlight").mousedown(function(){
 			$("."+start+end).removeClass(color);
 			$("."+start+end).removeClass(start+end);
 			$(".removehighlight").remove();
+			$("#addNote").remove();
+			$("#note"+start).remove();
 			for(i=0; i<highlights[chapterNumber].length; i++) {
 				console.log(highlights[chapterNumber][i].start+" "+start+" "+highlights[chapterNumber][i].end+" "+end+" "+highlights[chapterNumber][i].color+" "+color+" "+i);
 				console.log(highlights);
@@ -313,7 +321,31 @@ function highlight(color, start, end, add) {
 				}
 			}
 		});
+		$("#addNote").mousedown(function(){
+			if(!$('#note').length) {
+				$("#addNote").append('<form style="display:inline" action="javascript:addNote(\''+start+'\')"><input id="note" class="form-control input-sm" type="text" placeholder="Note" style="display: inline;width: 200px;margin-left: 10px;height: 25px;margin-top:-1px"></form>');
+			}
+		});
 	});
+}
+
+function addNote(start) {
+		$("<div class='displayNote' id='note"+start+"'></div>").insertBefore( "#"+start );
+		var noteVal = $("#note").val();
+		$("#note"+start).html(noteVal);
+		$(".removehighlight").remove();
+		$(".addNote").remove();
+		$("#addNote").remove();
+		for(i=0; i<highlights[chapterNumber].length; i++) {
+			if(highlights[chapterNumber][i].start = start) {
+				highlights[chapterNumber][i].note = noteVal;
+			}
+			var fb = new Firebase("https://librabooks.firebaseio.com");
+			fb.onAuth(function(authData) {
+				fb.child("users/"+authData.uid+"/books").child(bookId).child("highlights").set(highlights);
+				console.log("setting highlights");
+			});
+		}
 }
 
 var down = false;
