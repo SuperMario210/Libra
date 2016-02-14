@@ -70,7 +70,7 @@
               type: "GET",
               url: "http://libra-vmcool09.c9users.io/classroom/info?classID=" + classId,
               success: function(data) {
-                  $("#placeHolder").append('<div class="login classContainer"><h2 class="login-header">'+data.name+'</h2><p><span class="bolded">ID: </span>'+classId+'</p><button onclick="joinClass(\''+classId+'\')" class="block-button">View Class</button></div>');
+                  $("#placeHolder").append('<div class="login classContainer"><h2 class="login-header">'+data.name+'</h2><p><span class="bolded">ID: </span>'+classId+'</p><a href="class.html"><button class="block-button">View Class</button></a></div>');
               },
               error: function(data) {
                 alert("That is not a valid class ID!");

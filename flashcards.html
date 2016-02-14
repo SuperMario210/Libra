@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/flatly.css">
+  <link rel="stylesheet" type="text/css" href="css/fonts/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+<script src="https://code.jquery.com/jquery-2.1.4.min.js">
+    <script src="https://cdn.rawgit.com/nnattawat/flip/v1.0.19/dist/jquery.flip.min.js">
+  <script type="text/javascript" src="js/jquery.min.js">
+  </script>
+  <script type="text/javascript" src="js/bootstrap.min.js">
+  </script>
+  <script type="text/javascript" src="js/script.js">
+  </script>
+  <script type="text/javascript" src="https://cdn.firebase.com/js/client/2.4.0/firebase.js">
+  </script>
+      <style type="text/css">
+      body {
+      }
+      .card {
+        width: 100px;
+        height: 100px;
+        margin: 20px;
+        display: inline-block;
+      }
+      
+      .front, .back {
+        border: 2px gray solid;
+        padding: 10px;
+      }
+      .front {
+        background-color: #ccc;
+      }
+      .back {
+        background-color: red;
+      }
+          body {
+ background: #ccc;   
+}
+
+    </style>
+      <style>
+          
+          #f1_container {
+  position: relative;
+  margin: 10px auto;
+  width: 450px;
+  height: 281px;
+  z-index: 1;
+}
+#f1_container {
+  perspective: 1000;
+}
+#f1_card {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: all 1.0s linear;
+}
+#f1_container:hover #f1_card {
+  transform: rotateY(180deg);
+}
+.face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+.face.back {
+  display: block;
+  transform: rotateY(180deg);
+  box-sizing: border-box;
+  padding: 10px;
+  color: black;
+  text-align: center;
+  background-color: #fff;
+}
+          .className1{
+              
+              
+              border: 1px solid;
+              padding: 20px;
+              width: 200px;
+              text-align: center;
+              background-color: #07a2e4;
+              color:#fff;
+          }
+          .card{
+              
+  
+	perspective: 3072px;
+	position: relative;
+	margin-left: 40px;
+              display: block!important;
+              
+          }
+          .front{
+
+	backface-visibility: hidden;
+	transform-style: preserve-3d;
+	position: absolute;
+	z-index: 1;
+	padding: 20px 30px;
+	width: 350px;
+	min-height: 200px;
+	margin-left: 40px;
+	background-color: white;
+	box-shadow: 0px 3px 15px rgba(100, 100, 100, 0.25);
+	transition: all 0.5s ease-out 0s;
+       }
+                    .back{
+
+	backface-visibility: hidden;
+	transform-style: preserve-3d;
+	position: absolute;
+	z-index: 1;
+	padding: 20px 30px;
+	width: 350px;
+	min-height: 200px;
+	margin-left: 40px;
+	background-color: white;
+	box-shadow: 0px 3px 15px rgba(100, 100, 100, 0.25);
+	transition: all 0.5s ease-out 0s;
+       }
+      </style>
+  <title>
+    Template
+  </title>
+  
+  
+  <script>
+    
+    var str = window.location.href; 
+    var res = str.replace(window.location.pathname, "");
+    var loc = res.indexOf("=");
+    res = res.substring(loc+1,res.length);
+    console.log(res);
+
+
+
+      
+      
+      
+//    var fb = new Firebase("https://librabooks.firebaseio.com");
+//    var uid;
+//    fb.onAuth(function(authData) {
+//      if(authData) {
+//        uid = authData.uid;
+//      }
+//      else {
+//        window.location = "login.html";
+//      }
+//    }
+//             );
+    
+    
+    function onInit(){
+      $.ajax({
+        type: "GET",
+        url: "http://libra-vmcool09.c9users.io/quiz/list?book="+ res,
+        success: function(json)
+        { 
+             $(".deck").html("");
+                    var data = json
+                    for(var word in data) {
+                        $(".deck").append('<div id="f1_container"><div id="f1_card" class="shadow"><div class="front face">'+data[word]+'</div><div class="back face center">'+word+'</div></div></div>');
+                    }},
+                  error: function(data)
+                  {
+                    console.log("Not valid info!");
+                }}); }
+      
+       
+  </script>
+  
+  
+  </head>
+  <body onload="onInit()">
+    
+  <nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				</button>
+				<img class="navbar-brand nav-logo" src="img/libra-white.png">
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="home.html">My Books</a></li>
+					<li><a href="search.html">Find Books</a></li>
+					<li><a href="#">My Account</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+  
+<div class="deck" id="deck">
+<div id="f1_container">
+    <div id="f1_card" class="shadow">
+          <div class="front face">
+                Cherub
+            </div>
+          <div class="back face center">
+            a winged angelic being described in biblical tradition as attending on God. It is represented in ancient Middle Eastern art as a lion or bull with eagles' wings and a human face, and regarded in traditional Christian angelology as an angel of the second highest order of the ninefold celestial hierarchy.
+          </div>
+    </div>
+</div>
+      </div>
+  <!-- Bootstrap core JavaScript
+================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+  </script>
+  <script>
+    window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+  </script>
+  <script src="../../dist/js/bootstrap.min.js">
+  </script>
+  <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+  <script src="../../assets/js/vendor/holder.min.js">
+  </script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="../../assets/js/ie10-viewport-bug-workaround.js">
+  </script>
+  
+  
+  </body>
+</html>
