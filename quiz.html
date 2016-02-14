@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/flatly.css">
+  <link rel="stylesheet" type="text/css" href="css/fonts/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script type="text/javascript" src="js/jquery.min.js">
+  </script>
+  <script type="text/javascript" src="js/bootstrap.min.js">
+  </script>
+  <script type="text/javascript" src="js/script.js">
+  </script>
+  <script type="text/javascript" src="https://cdn.firebase.com/js/client/2.4.0/firebase.js">
+  </script>
+      <style>
+          .className1{
+              
+              
+              border: 1px solid;
+              padding: 20px;
+              width: 200px;
+              text-align: center;
+              background-color: #07a2e4;
+              color:#fff;
+          }
+      
+      </style>
+  <title>
+    Template
+  </title>
+  
+  
+  <script>
+    
+    var str = window.location.href; 
+    var res = str.replace(window.location.pathname, "");
+    var loc = res.indexOf("=");
+    res = res.substring(loc+1,res.length);
+    console.log(res);
+
+
+
+      
+      
+      
+    var fb = new Firebase("https://librabooks.firebaseio.com");
+    var uid;
+    fb.onAuth(function(authData) {
+      if(authData) {
+        uid = authData.uid;
+      }
+      else {
+        window.location = "login.html";
+      }
+    }
+             );
+    
+    
+    function onInit(){
+      
+      $.ajax({
+        type: "GET",
+        url: "http://libra-vmcool09.c9users.io/classroom/add?teacherID="+ res,
+        success: function(json)
+        {
+            
+             $(".deck").html("");
+                    var data = JSON.parse(json);
+                    for(i=0; i<data.length; i++) {
+                        $(".deck").append('            '+data[i].def+'.  <input type="text" /> <br />');
+                    }
+                
+                
+            }}
+        }
+                  ,
+                  error: function(data)
+                  {
+                    alert("Not valid info!");
+                }
+                  ,
+                }
+                      );
+        
+    }
+    
+    
+    var nme;
+    
+    function grade()
+    {
+       var arr = []
+    for(var i=0;i<50;i++){
+      nme = document.getElementById('className' + i).value;
+    arr[i] = nme;
+    }
+      check(arr);
+      
+    }
+    
+    function check(words)
+    {
+      $.ajax({
+        type: "GET",
+        url: "http://libra-vmcool09.c9users.io/classroom/add?teacherID="+ res,
+        success: function(json)
+        {
+            for(var j=0;j<50;j++){
+            if(data==words){
+                
+                
+                
+            }}
+        }
+                  ,
+                  error: function(data)
+                  {
+                    alert("Not valid info!");
+                }
+                  ,
+                }
+                      );
+            }
+       
+       
+  </script>
+  
+  
+  </head>
+  <body onload="onInit()">
+    
+  <nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				</button>
+				<img class="navbar-brand nav-logo" src="img/libra-white.png">
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="home.html">My Books</a></li>
+					<li><a href="search.html">Find Books</a></li>
+					<li><a href="#">My Account</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+  
+  
+  
+  
+  <div class="container-fluid">
+
+    <div class="">
+      <div class="">
+          
+          
+        <form class="deck" id="deck">
+            A way of viewing things, (n).  <input type="text" /> <br />
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+  
+  <!-- Bootstrap core JavaScript
+================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+  </script>
+  <script>
+    window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+  </script>
+  <script src="../../dist/js/bootstrap.min.js">
+  </script>
+  <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+  <script src="../../assets/js/vendor/holder.min.js">
+  </script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="../../assets/js/ie10-viewport-bug-workaround.js">
+  </script>
+  
+  
+  </body>
+</html>
