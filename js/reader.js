@@ -33,15 +33,17 @@ $(document).ready(function() {
 			if(data.val()) {
 				pageStart=data.val().location;
 				chapterNumber=data.val().chapter;
-				chapter = book[chapterNumber]['text'];
-				words = chapter.split(" ");
+				chapter = book[chapterNumber]['text'].replace(/<p>/gi, "<P>");
+				chapter = chapter.replace(/<\/p>/gi, "</P>");
+				words = chapter.replace(/<\/P><P>/gi, "</P> <P>").split(" ");
 				displayPage(pageStart);
 			}
 			else {
 				pageStart=0;
 				chapterNumber=0;
-				chapter = book[chapterNumber]['text'];
-				words = chapter.split(" ");
+				chapter = book[chapterNumber]['text'].replace(/<p>/gi, "<P>");
+				chapter = chapter.replace(/<\/p>/gi, "</P>");
+				words = chapter.replace(/<\/P><P>/gi, "</P> <P>").split(" ");
 				displayPage(pageStart);
 			}
 		});
@@ -129,8 +131,9 @@ function displayPage(start){
 function nextChapter() {
 	if(chapterNumber<book.length-1) {
 		chapterNumber++;
-		chapter = book[chapterNumber]['text'];
-		words = chapter.split(" ");
+		chapter = book[chapterNumber]['text'].replace(/<p>/gi, "<P>");
+		chapter = chapter.replace(/<\/p>/gi, "</P>");
+		words = chapter.replace(/<\/P><P>/gi, "</P> <P>").split(" ");
 		displayPage(0);
 	}
 }
@@ -138,8 +141,9 @@ function nextChapter() {
 function prevChapter() {
 	if(chapterNumber>0) {
 		chapterNumber--;
-		chapter = book[chapterNumber]['text'];
-		words = chapter.split(" ");
+		chapter = book[chapterNumber]['text'].replace(/<p>/gi, "<P>");
+		chapter = chapter.replace(/<\/p>/gi, "</P>");
+		words = chapter.replace(/<\/P><P>/gi, "</P> <P>").split(" ");
 		pageStart = words.length-1;
 		flipLeft();
 	}
