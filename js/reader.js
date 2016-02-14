@@ -9,45 +9,57 @@ var chapterNumber = 0;
 var chapter;
 var bookId;
 var words;
+var totalWords;
+var lengths=[];
+var title;
 
 $(document).ready(function() {
 	$(".reader").html("<img src='img/loading.gif'>");
 	bookId = getUrlParameter('id');
+	$(function() {
+			    $( "#slider" ).slider({
+			    	change: function( event, ui ) {calcPage();},
+			    	max: 96
+			    });
+			  });
 	var fb = new Firebase("https://librabooks.firebaseio.com");
 	$.ajax({
         type: "GET",
         url: "http://libra-vmcool09.c9users.io/books/chapters?bookID=" + bookId,
         success: function(data) {
-        	book = data;
+        	book = data.chapters;
+        	title = data.title;
         	fb.onAuth(function(authData) {
-		fb.child("users/"+authData.uid+"/books").child(bookId).child("highlights").once("value", function(data) {
-			if(data.val()) {
-				highlights=data.val();
-				applyHighlights();
-			}
-			else {
-				highlights=[];
-			}
-		});
-		fb.child("users/"+authData.uid+"/books").child(bookId).child("position").once("value", function(data) {
-			if(data.val()) {
-				pageStart=data.val().location;
-				chapterNumber=data.val().chapter;
-				chapter = book[chapterNumber]['text'].replace(/<p>/gi, "<P>");
-				chapter = chapter.replace(/<\/p>/gi, "</P>");
-				words = chapter.replace(/<\/P><P>/gi, "</P> <P>").split(" ");
-				displayPage(pageStart);
-			}
-			else {
-				pageStart=0;
-				chapterNumber=0;
-				chapter = book[chapterNumber]['text'].replace(/<p>/gi, "<P>");
-				chapter = chapter.replace(/<\/p>/gi, "</P>");
-				words = chapter.replace(/<\/P><P>/gi, "</P> <P>").split(" ");
-				displayPage(pageStart);
-			}
-		});
-	});
+				fb.child("users/"+authData.uid+"/books").child(bookId).child("highlights").once("value", function(data) {
+					if(data.val()) {
+						highlights=data.val();
+						applyHighlights();
+					}
+					else {
+						highlights=[];
+					}
+				});
+				fb.child("users/"+authData.uid+"/books").child(bookId).child("position").once("value", function(data) {
+					if(data.val()) {
+						pageStart=data.val().location;
+						chapterNumber=data.val().chapter;
+						chapter = book[chapterNumber]['text'].replace(/<p>/gi, "<P>");
+						chapter = chapter.replace(/<\/p>/gi, "</P>");
+						words = chapter.replace(/<\/P><P>/gi, "</P> <P>").split(" ");
+						displayPage(pageStart);
+					}
+					else {
+						pageStart=0;
+						chapterNumber=0;
+						chapter = book[chapterNumber]['text'].replace(/<p>/gi, "<P>");
+						chapter = chapter.replace(/<\/p>/gi, "</P>");
+						words = chapter.replace(/<\/P><P>/gi, "</P> <P>").split(" ");
+						displayPage(pageStart);
+					}
+					calcTotal();
+					calcPosition()
+				});
+			});
         },
         error: function(data) {
           alert("Not a valid book Id!");
@@ -69,6 +81,57 @@ var getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
+
+function calcTotal() {
+	var total=0;
+	for(i=0; i<book.length; i++) {
+		x = book[i]['text'].replace(/<p>/gi, "<P>");
+		x = x.replace(/<\/p>/gi, "</P>");
+		y = x.replace(/<\/P><P>/gi, "</P> <P>").split(" ");
+		total += y.length;
+		lengths[i] = y.length;
+	}
+	totalWords = total;
+}
+
+function calcPosition() {
+	var currentPos = 0;
+	for(i=0; i<chapterNumber; i++) {
+		currentPos += lengths[i];
+	}
+	currentPos += pageStart;
+	$(".ui-slider-handle").css("left", (currentPos/totalWords)*100+"%");
+	console.log(currentPos+", "+totalWords);
+}
+
+function calcPage() {
+	var wordsC = $('#slider').slider("option", "value")/100*totalWords;
+	console.log(wordsC);
+	var count = 0;
+	while(true) {
+		console.log(wordsC+" "+ lengths[count]);
+		wordsC -= lengths[count];
+		count++;
+		if(wordsC<0)  {
+			wordsC += lengths[count-1];
+			break;
+		}
+		if(count>=book.length) {
+			count=book.length-1;
+			break;
+		}
+	}
+	if(count>=book.length) {
+			count=book.length-1;
+			
+		}
+	chapterNumber = count;
+	chapter = book[chapterNumber]['text'].replace(/<p>/gi, "<P>");
+	chapter = chapter.replace(/<\/p>/gi, "</P>");
+	words = chapter.replace(/<\/P><P>/gi, "</P> <P>").split(" ");
+	pageStart = wordsC;
+	displayPage(pageStart.toFixed(0), false);
+}
 
 $(document).keydown(function(e) {
     switch(e.which) {
@@ -93,7 +156,8 @@ function applyHighlights() {
 	}
 }
 
-function displayPage(start){
+function displayPage(start, updateSlider){
+	udateSlider = updateSlider || true;
 	if(start<words.length) {
 		$("#reader").html("");
 		var count = start;
@@ -101,6 +165,8 @@ function displayPage(start){
 		if(start==0) {
 			$("#reader").append("<h1 class='chapter-title'>"+book[chapterNumber]['title']+"</h1>");
 		}
+		else
+			$("#reader").append("<h3 class='book-title'>"+title+"</h3>");
 		while(true) {
 			if(words[count].indexOf("<P>") >= 0)
 				$("#reader").append("<span class='indent' id='"+count+"'>"+words[count].replace("<P>","")+"&nbsp;</span>");
@@ -121,6 +187,8 @@ function displayPage(start){
 		pageEnd = count;
 		$("#"+pageEnd).remove();
 		applyHighlights();
+		if(updateSlider)
+			calcPosition();
 	}
 	else {
 		console.log("next")
@@ -150,7 +218,7 @@ function prevChapter() {
 }
 
 function flipRight() {
-	displayPage(pageEnd);
+	displayPage(pageEnd, true);
 	console.log(pageStart+", "+pageEnd)
 }
 
@@ -186,7 +254,9 @@ function flipLeft() {
 		recordLocation(1);
 		console.log(pageStart+", "+pageEnd)
 		$("#"+pageStart).remove();
+		$("#reader").prepend("<h3 class='book-title'>"+title+"</h3>");
 		applyHighlights();
+		calcPosition();
 		if(pageStart<=1) {
 			displayPage(0);
 		}
