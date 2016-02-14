@@ -1,0 +1,35 @@
+.book{    
+        float: left;
+  list-style: outside none none;
+  margin-left: 90px;
+            margin-bottom:60px;
+  box-shadow: 0px 3px 15px rgba(100, 100, 100, 0.25);
+  position: relative;
+  width: 200px;
+  padding: 20px 20px 20px 30px;
+            border-bottom: 10px solid #2980B9;}
+        
+.field {
+  display:flex;
+  position:realtive;
+  margin:5em auto;
+  width:70%;
+  flex-direction:row;
+/*  box-shadow:2px 2px 0 rgb(20, 20, 20)  ; */
+}
+.field>input[type=text],
+.field>button {
+  display:block;
+  font:1.2em 'Montserrat Alternates';
+}
+.field>input[type=text] {
+  flex:1;
+  padding:0.6em;
+/*  border:0.2em solid rgb(52, 73, 94);*/
+}
+.field>button {
+  padding:1em 2em;
+  background-color:rgb(41, 128, 185);
+  color:white;
+  border:none;
+}

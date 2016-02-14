@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/flatly.css">
+	<link rel="stylesheet" type="text/css" href="css/fonts/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+	<title>Libra - Login</title>
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				</button>
+				<img class="navbar-brand nav-logo" src="img/libra-white.png">
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#">My Library</a></li>
+					<li><a href="#">Find Books</a></li>
+					<li><a href="#">My Account</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="login">
+		<h2 class="login-header">User Login</h2>
+		<form action="javascript:login()">
+			<div class="form-group">
+				<br>
+				<input id="email" class="form-control" type="email" placeholder="Email">
+				<input id="pass" class="form-control" type="password" placeholder="Password" style="margin-top: 10px">
+				<a href="register.html" class="register">Need an account? Register here.</a>
+			</div>
+			<button class="block-button" type="submit">Login</button>
+		</form>
+	</div>
+	<script type="text/javascript">
+		function login() {
+			var email = $('#email').val();
+			var pass = $('#pass').val();
+			var fb = new Firebase("https://librabooks.firebaseio.com");
+			fb.authWithPassword({email:email,password:pass},function(error, authData) {
+				if (error) {
+					alert("Incorrect information");
+				} else {
+					var userID = authData.uid;
+					window.location = "home.html";
+				}
+			});
+			/*$.ajax({
+		        type: "GET",
+		        url: "http://libra-vmcool09.c9users.io/users/login",
+		        data: {username: uname, password: pass},
+		        success: function(data) {
+		 			console.log(data)
+		        },
+		        error: function(data) {
+		          alert("Login Failed");
+		        },
+		      });*/
+		}
+	</script>
+</body>
+</html>

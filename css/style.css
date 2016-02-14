@@ -1,0 +1,132 @@
+@font-face {
+    font-family: Roboto;
+    src: url(fonts/Roboto/Roboto-Regular.ttf);
+}
+
+@font-face {
+    font-family: Roboto-light;
+    src: url(fonts/Roboto/Roboto-Light.ttf);
+}
+
+@font-face {
+    font-family: Roboto-thin;
+    src: url(fonts/Roboto/Roboto-Thin.ttf);
+}
+
+@font-face {
+    font-family: Reader;
+    src: url(fonts/Merriweather/Merriweather-Light.ttf);
+}
+
+* {
+	font-family: Roboto-light;
+}
+
+body {
+	background-color: #ecf0f1;
+}
+
+.container-fluid {
+	padding: 8px 30px;
+}
+
+.navbar {
+	border-radius: 0;
+	z-index: 10;
+}
+
+.navbar-brand {
+	font-size: 25px;
+	margin-top: -2px;
+}
+
+.navbar-right {
+	font-size: 17px;
+	text-transform: uppercase;
+}
+
+
+.nav>li>a {
+    padding: 19.5px 20px;
+    transition: color 0.25s;
+}
+
+.navbar-brand {
+	transition: color 0.25s;
+}
+
+.navbar-default .navbar-nav>li>a:hover, .navbar-header>.navbar-brand:hover, .navbar-default .navbar-nav>li>a:focus, .navbar-header>.navbar-brand:focus {
+	color: #bdc3c7;
+}
+
+.nav-logo {
+	width: 100px;
+    height: auto;
+    margin-top: -15px;
+    position: absolute;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family: Roboto-thin;
+}
+
+/* Login Page */
+.login {
+	width: 40%;
+	margin: 50px auto;
+	background-color: #fff;
+	padding: 30px;
+	font-family: Roboto!important;
+	text-transform: uppercase;
+	text-align: center;
+	border-bottom: 10px #2980b9 solid;
+	box-shadow: 0 3px 15px rgba(100,100,100, 0.25);
+	animation: fade-in .65s ease;
+}
+
+.fade-in {
+	animation: fade-in .65s ease;
+}
+
+@keyframes fade-in {
+    from {opacity: 0; margin-top: 100px}
+    to {opacity: 1; margin-top: 50px;}
+}
+
+.form-control {
+	border-radius: 0px;
+}
+
+.form-control:focus {
+	border-color: #2980b9;
+}
+
+.register, .register:hover, .register:focus {
+	text-align: right;
+	text-transform: none;
+	float: right;
+	color: #bdc3c7;
+	padding-top: 5px;
+}
+
+.block-button {
+	width: 100%;
+	padding: 20px 0;
+	text-align: center;
+	text-transform: uppercase;
+	background-color: #2980b9;
+	color: #fff;
+	font-size: 16px;
+	margin-top: 10px;
+	cursor: pointer;
+	transition: background-color 0.25s;
+	border: none;
+}
+
+.block-button:hover {
+	background-color: #3498db;
+}
+
+.login-header {
+    font-family: Roboto-light;	
+}
