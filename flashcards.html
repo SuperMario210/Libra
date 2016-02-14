@@ -6,7 +6,6 @@
   <link rel="stylesheet" type="text/css" href="css/fonts/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
 <script src="https://code.jquery.com/jquery-2.1.4.min.js">
-    <script src="https://cdn.rawgit.com/nnattawat/flip/v1.0.19/dist/jquery.flip.min.js">
   <script type="text/javascript" src="js/jquery.min.js">
   </script>
   <script type="text/javascript" src="js/bootstrap.min.js">
@@ -16,8 +15,6 @@
   <script type="text/javascript" src="https://cdn.firebase.com/js/client/2.4.0/firebase.js">
   </script>
       <style type="text/css">
-      body {
-      }
       .card {
         width: 100px;
         height: 100px;
@@ -35,9 +32,6 @@
       .back {
         background-color: red;
       }
-          body {
- background: #ccc;   
-}
 
     </style>
       <style>
@@ -56,7 +50,7 @@
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: all 1.0s linear;
+  transition: all 0.5s ease;
 }
 #f1_container:hover #f1_card {
   transform: rotateY(180deg);
@@ -107,7 +101,7 @@
 	margin-left: 40px;
 	background-color: white;
 	box-shadow: 0px 3px 15px rgba(100, 100, 100, 0.25);
-	transition: all 0.5s ease-out 0s;
+	transition: all 0.25s ease-out 0s;
        }
                     .back{
 
@@ -121,7 +115,7 @@
 	margin-left: 40px;
 	background-color: white;
 	box-shadow: 0px 3px 15px rgba(100, 100, 100, 0.25);
-	transition: all 0.5s ease-out 0s;
+	transition: all 0.25s ease-out 0s;
        }
       </style>
   <title>
@@ -154,29 +148,50 @@
 //    }
 //             );
     
+    var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
     
-    function onInit(){
+    $(document).ready(function(){
+      bookId = getUrlParameter('id');
       $.ajax({
         type: "GET",
-        url: "http://libra-vmcool09.c9users.io/quiz/list?book="+ res,
+        url: "http://libra-vmcool09.c9users.io/quiz/list?book="+bookId,
         success: function(json)
         { 
-             $(".deck").html("");
-                    var data = json
-                    for(var word in data) {
-                        $(".deck").append('<div id="f1_container"><div id="f1_card" class="shadow"><div class="front face">'+data[word]+'</div><div class="back face center">'+word+'</div></div></div>');
-                    }},
-                  error: function(data)
-                  {
-                    console.log("Not valid info!");
-                }}); }
+          $(".deck").html("");
+          var data = json
+          for(var word in data) {
+              $(".carousel-inner").append('<div class="item"><div id="f1_container"><div id="f1_card" class="shadow"><div class="front face">'+word+'</div><div class="back face center">'+data[word]+'</div></div></div></div>');
+          }
+          $(document).ready(function () {
+            $('#myCarousel').find('.item').first().addClass('active');
+          });
+        },
+        error: function(data)
+        {
+          console.log("Not valid info!");
+        }
+      });
+    });
       
        
   </script>
   
   
   </head>
-  <body onload="onInit()">
+  <body>
     
   <nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -200,34 +215,26 @@
 	</nav>
   
 <div class="deck" id="deck">
-<div id="f1_container">
-    <div id="f1_card" class="shadow">
-          <div class="front face">
-                Cherub
-            </div>
-          <div class="back face center">
-            a winged angelic being described in biblical tradition as attending on God. It is represented in ancient Middle Eastern art as a lion or bull with eagles' wings and a human face, and regarded in traditional Christian angelology as an angel of the second highest order of the ninefold celestial hierarchy.
-          </div>
-    </div>
+  <img src="img/loading.gif">
 </div>
-      </div>
-  <!-- Bootstrap core JavaScript
-================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
-  </script>
-  <script>
-    window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
-  </script>
-  <script src="../../dist/js/bootstrap.min.js">
-  </script>
-  <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-  <script src="../../assets/js/vendor/holder.min.js">
-  </script>
-  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <script src="../../assets/js/ie10-viewport-bug-workaround.js">
-  </script>
-  
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
   
   </body>
 </html>
