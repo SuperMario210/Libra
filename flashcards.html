@@ -142,17 +142,17 @@
       
       
       
-    var fb = new Firebase("https://librabooks.firebaseio.com");
-    var uid;
-    fb.onAuth(function(authData) {
-      if(authData) {
-        uid = authData.uid;
-      }
-      else {
-        window.location = "login.html";
-      }
-    }
-             );
+//    var fb = new Firebase("https://librabooks.firebaseio.com");
+//    var uid;
+//    fb.onAuth(function(authData) {
+//      if(authData) {
+//        uid = authData.uid;
+//      }
+//      else {
+//        window.location = "login.html";
+//      }
+//    }
+//             );
     
     
     function onInit(){
@@ -163,13 +163,13 @@
         { 
              $(".deck").html("");
                     var data = JSON.parse(json);
-                    for(i=0; i<data.length; i++) {
-                        $(".deck").append('<div id="f1_container"><div id="f1_card" class="shadow"><div class="front face">'+data[i].definition+'</div><div class="back face center">'+data[i].term+'</div></div></div>');
-                    }}},
+                    for(var word in data) {
+                        $(".deck").append('<div id="f1_container"><div id="f1_card" class="shadow"><div class="front face">'+data[word]+'</div><div class="back face center">'+word+'</div></div></div>');
+                    }},
                   error: function(data)
                   {
                     console.log("Not valid info!");
-                }); }
+                }}); }
       
        
   </script>

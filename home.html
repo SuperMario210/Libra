@@ -43,7 +43,7 @@
 
 	<script type="text/javascript">
 		var fb = new Firebase("https://librabooks.firebaseio.com");
-		var uid;
+		var uid = false;
 		fb.onAuth(function(authData) {
 			if(authData) {
 				uid = authData.uid;
